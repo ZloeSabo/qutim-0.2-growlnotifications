@@ -1,0 +1,46 @@
+There is still no installer for EasyVZ, but it is fairly straight forward 
+to setup. You can copy the source anywhere you want on your machine.
+
+Pre-requesites:
+---------------
+1. openVZ enabled kernel
+2. All the openVZ utilities need to be installed
+3. If you want to create new VPSes, you need to have template caches
+   installed in /vz/template/cache
+
+In short, it must be a working openVZ system, on which you must be able 
+to manually create, delete or manage VPSes.
+
+Running the server
+------------------
+The source distribution contains two directories, one is named "backend" and 
+the other "gui". The "backend" directory contains the server source code.
+To run the server, become root and run start the server
+
+# cd backend/
+# python server.py
+
+This will start the server. Please note that the server needs to be started
+on the openVZ node that you intend to manage. The client can run on any
+system that can reach the server over the network. The server uses port 8086.
+
+Warning: In the current version of the software, there is no authentication,
+anyone who can run the client can manage the server. Please exercise caution.
+
+Running the client
+------------------
+The client can be run on the same machine as the server or on another machine
+that can reach the server over a network. The client must be run as a normal
+user, not root. Running the client is very simple:
+
+$ cd gui/
+$ python ezvz.py
+
+This will bring up the server IP/port dialog box, you can figure it out from 
+here, I guess.
+
+Thankyou for your interest in EasyVZ.
+
+Shuveb Hussain
+shuveb@binarykarma.com
+

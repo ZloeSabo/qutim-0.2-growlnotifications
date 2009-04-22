@@ -1,0 +1,15 @@
+EasyVZ is a graphical frontend for OpenVZ. It lets you create, delete and 
+manage VPSs or VEs. Please see the INSTALL file for installation instructions.
+
+Please be warned that EasyVZ is still pre-alpha software. That pretty much
+means there are still hell lot of bugs and nothing is guarunteed. 
+
+This software is released under the GPL v2. Please see the file COPYING that
+came along with this software.
+
+This is my first Python program and I'm no hacker. Please apply benovolence.
+
+You can contact me at shuveb@binarykarma.com.
+
+Have a nice time.
+
