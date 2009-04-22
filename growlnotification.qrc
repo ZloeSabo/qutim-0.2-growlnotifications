@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>ico/GrowlAlert.png</file>
+    </qresource>
+</RCC>
