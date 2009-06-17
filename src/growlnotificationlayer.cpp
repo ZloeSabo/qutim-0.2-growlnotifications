@@ -251,3 +251,9 @@ void GrowlNotificationLayer::removeLayerSettings()
 {
     qDebug() << "GrowlNotification: settings change aborted";
 }
+
+//0.2+ section
+void GrowlNotificationLayer::showPopup(const TreeModelItem &item, const QString &message, NotificationType type)
+{
+    this->userMessage(item, message, type);
+}

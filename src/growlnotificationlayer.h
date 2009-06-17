@@ -48,6 +48,11 @@ public:
     void registerPluginSystem (PluginSystemInterface* plugin_system);
     virtual QList<SettingsStructure> getLayerSettingsList();
 
+    //0.2beta
+    virtual void showPopup(const TreeModelItem &item, const QString &message, NotificationType type);
+    virtual void playSound(const TreeModelItem &item, NotificationType type) {};
+    virtual void notify(const TreeModelItem &item, const QString &message, NotificationType type) { showPopup(item,message, type); };
+
 private:
     PluginSystemInterface *m_plugin_system;
     ActiveNotifications m_activenotifications;
