@@ -257,3 +257,11 @@ void GrowlNotificationLayer::showPopup(const TreeModelItem &item, const QString 
 {
     this->userMessage(item, message, type);
 }
+
+void GrowlNotificationLayer::playSound(const TreeModelItem &item, NotificationType type)
+{
+        //QString file_name = m_sound_path.value(type, QString());
+
+        //if(!file_name.isEmpty() /*&& m_sound_layer && m_enable_sound*/)
+        //        sound.PlaySound(file_name);
+}

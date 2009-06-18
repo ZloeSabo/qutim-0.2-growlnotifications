@@ -22,6 +22,7 @@
 #include <qutim/plugininterface.h>
 #include "growlnotification.h"
 #include "growlsettings.h"
+#include "growlcocoasound.h"
 #include "ui_settings.h"
 
 typedef QHash<QString,  bool> ActiveNotifications;
@@ -50,7 +51,7 @@ public:
 
     //0.2beta
     virtual void showPopup(const TreeModelItem &item, const QString &message, NotificationType type);
-    virtual void playSound(const TreeModelItem &item, NotificationType type) {};
+    virtual void playSound(const TreeModelItem &item, NotificationType type);
     virtual void notify(const TreeModelItem &item, const QString &message, NotificationType type) { showPopup(item,message, type); };
 
 private:
@@ -63,6 +64,7 @@ private:
     Ui::GrowlSettings ui;
     QList<SettingsStructure> m_widgets;
     QWidget m_widget;
+    GrowlSound sound;
 private slots:
     void createDefaultIni();
 };

@@ -2,7 +2,8 @@
 # Project created by QtCreator 2009-04-20T18:42:44
 # -------------------------------------------------
 QT += core \
-    gui
+    gui \
+    phonon
 TARGET = growlnotification
 TEMPLATE = lib
 CONFIG += qt \
@@ -12,13 +13,17 @@ DESTDIR = build
 QMAKE_LFLAGS += -framework \
     Growl \
     -framework \
-    CoreFoundation
+    CoreFoundation \
+    \ \
+    -framework \
+    Cocoa
 FORMS += ui/settings.ui
 HEADERS += src/notifyhelper.h \
     src/growlsettings.h \
     src/growlnotificationlayer.h \
     src/growlnotificationcore.h \
-    src/growlnotification.h
+    src/growlnotification.h \
+    src/growlcocoasound.h
 SOURCES += src/notifyhelper.cpp \
     src/growlsettings.cpp \
     src/growlnotificationlayer.cpp \
@@ -26,3 +31,4 @@ SOURCES += src/notifyhelper.cpp \
     src/growlnotification.cpp
 RESOURCES += growlnotification.qrc
 UI_DIR = ui
+OTHER_FILES += src/growlcocoasound.mm
