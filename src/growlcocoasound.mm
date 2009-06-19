@@ -25,5 +25,6 @@ void GrowlSound::PlaySound(const QString & soundfile)
 					  initWithContentsOfFile: 
                                           [NSString stringWithUTF8String: soundfile.toUtf8().data()]
 					  byReference: YES];
-	[sound play];
+        [sound play];
+        [sound release];
 }

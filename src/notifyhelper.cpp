@@ -17,12 +17,16 @@
  */
 
 #include <QDebug>
+#include <QTimer>
 #include "notifyhelper.h"
 
 
 NotifyHelper::NotifyHelper(const TreeModelItem& tree_model_item, PluginSystemInterface* plugin_system) {
         m_plugin_system = plugin_system;
         m_contact_item = tree_model_item;
+
+        QTimer::singleShot(15000, this, SLOT(deleteLater()));
+
 }
 
 //Unknown

@@ -137,10 +137,11 @@ void GrowlNotificationLayer::userMessage(const TreeModelItem &item, const QStrin
 
                 NotifyHelper *notify_helper = new NotifyHelper (item,m_plugin_system);
                 this->m_notifier->notify(n_type, contact_nick, msg, avatar, false, notify_helper, SLOT(startChatSlot()), SLOT(timeoutSlot()));
+                //notify_helper->deleteLater();
             }
         }
 
-        qDebug() << "GrowlNotification: recieved message " <<contact_nick << " "<< message;
+        qDebug() << "GrowlNotification: recieved message " <<contact_nick << " "<< message << " " << type;
 
 }
 
@@ -225,6 +226,7 @@ QList<SettingsStructure> GrowlNotificationLayer::getLayerSettingsList()
         this->m_line_edit_mapping["startupSet"] = ui.StartupFilename;
         this->m_line_edit_mapping["syseventSet"] = ui.SystemEventFilename;
         this->m_line_edit_mapping["inSet"] = ui.IncomingFilename;
+        this->m_line_edit_mapping["outSet"] = ui.OutgoingFilename;
         this->m_line_edit_mapping["onlineSet"] = ui.OnlineFilename;
         this->m_line_edit_mapping["offlineSet"] = ui.OfflineFilename;
         this->m_line_edit_mapping["statuschangeSet"] = ui.StatusChangeFilename;
@@ -238,7 +240,6 @@ QList<SettingsStructure> GrowlNotificationLayer::getLayerSettingsList()
                 i.value() = this->m_settings->value(iniValue).toBool(); //load settings
                 if(this->m_mapping.contains(i.key()))  {
                        this->m_mapping[i.key()]->setChecked(this->m_settings->value(iniValue).toBool());
-                       //qDebug() << i.key() << " "<< this->m_settings->value(iniValue).toString();
                 }
              }
         }
@@ -248,10 +249,7 @@ QList<SettingsStructure> GrowlNotificationLayer::getLayerSettingsList()
         while(it.hasNext()) {
             it.next();
             QString iniValue = "sound/" + it.key();
-            qDebug()  << this->m_settings->isValid(iniValue);
             if(this->m_settings->isValid(iniValue))  {
-                //it.value()-> = this->m_settings->value(iniValue); //load settings
-                //qDebug() << "a";
                 if(this->m_line_edit_mapping.contains(it.key()))  {
                        this->m_line_edit_mapping[it.key()]->setText(this->m_settings->value(iniValue).toString());
                        //qDebug() << "set :" << i.key() <<" = " << this->m_settings->value(iniValue).toString();
@@ -259,16 +257,15 @@ QList<SettingsStructure> GrowlNotificationLayer::getLayerSettingsList()
              }
         }
 
+        //Mapbutton clicked event to mapper
         quint16 rows = ui.gridLayout->rowCount();
         for(quint16 num=2; num < rows; num++) {
             QLayoutItem * wid = ui.gridLayout->itemAtPosition(num, 2);
             if(!wid->isEmpty()) {
                 QWidget * button = wid->widget();
-                QObject::connect(button, SIGNAL(pressed()), this->m_button_mapper, SLOT(map()));
+                QObject::connect(button, SIGNAL(clicked()), this->m_button_mapper, SLOT(map()));
                 this->m_button_mapper->setMapping(button, button->objectName());
             }
-
-
         }
 
         QObject::connect(this->m_button_mapper, SIGNAL(mapped(const QString &)), SLOT(fileSelectPresed(const QString &)));
@@ -295,6 +292,8 @@ void GrowlNotificationLayer::saveLayerSettings()
         it.next();
         if(QFile::exists(it.value()->text())) {
             this->m_settings->setValue("sound/" + it.key(), it.value()->text());
+        } else {
+            this->m_settings->setValue("sound/" + it.key(), "");
         }
         qDebug() << "sound/" << it.key() <<" = " << it.value()->text();
     }
@@ -327,6 +326,9 @@ void GrowlNotificationLayer::playSound(const TreeModelItem &item, NotificationTy
                 case NotifyMessageGet:
                         n_type = "inSet";
                         break;
+                case NotifyMessageSend:
+                        n_type = "outSet";
+                        break;
                 case NotifyBirthday:
                         n_type = "birthdaySet";
                         break;
@@ -352,7 +354,7 @@ void GrowlNotificationLayer::playSound(const TreeModelItem &item, NotificationTy
 
 void GrowlNotificationLayer::fileSelectPresed(const QString &itemName)
 {
-    qDebug() << "Pressed:" << itemName;
+    qDebug() <<  "GrowlNotification: pressed:" << itemName;
     QString oldpath = this->m_line_edit_mapping[itemName]->text();
     qDebug() << oldpath;
     if(!QFile::exists(oldpath)) {
@@ -363,5 +365,6 @@ void GrowlNotificationLayer::fileSelectPresed(const QString &itemName)
     QString fileName = QFileDialog::getOpenFileName(&this->m_widget,
         tr("Select sound file"), oldpath,
         tr("All files (*.*)"));
+    this->m_settings->setValue("sound/" + itemName, fileName);
     this->m_line_edit_mapping[itemName]->setText(fileName);
 }
