@@ -20,6 +20,8 @@
 #include <QStringList>
 #include <QMutableHashIterator>
 #include <QPixmap>
+#include <QFile>
+#include <QFileDialog>
 #include "growlnotificationlayer.h"
 #include "notifyhelper.h"
 #include "ui_settings.h"
@@ -39,10 +41,13 @@ GrowlNotificationLayer::GrowlNotificationLayer ()
     this->m_activenotifications["Starting"] = false;
     this->m_activenotifications["Contact has birthday"] = false;
     this->m_activenotifications["System notification"] = false;
+
+    this->m_button_mapper = new QSignalMapper(this);
 }
 
 GrowlNotificationLayer::~GrowlNotificationLayer ()
 {
+    this->m_button_mapper->~QSignalMapper();
 }
 
 bool GrowlNotificationLayer::init(PluginSystemInterface *plugin_system)
@@ -217,6 +222,14 @@ QList<SettingsStructure> GrowlNotificationLayer::getLayerSettingsList()
         this->m_mapping["Contact has birthday"] = ui.Birthday;
         this->m_mapping["Enabled"] = ui.NotifyEnabled;
 
+        this->m_line_edit_mapping["startupSet"] = ui.StartupFilename;
+        this->m_line_edit_mapping["syseventSet"] = ui.SystemEventFilename;
+        this->m_line_edit_mapping["inSet"] = ui.IncomingFilename;
+        this->m_line_edit_mapping["onlineSet"] = ui.OnlineFilename;
+        this->m_line_edit_mapping["offlineSet"] = ui.OfflineFilename;
+        this->m_line_edit_mapping["statuschangeSet"] = ui.StatusChangeFilename;
+        this->m_line_edit_mapping["birthdaySet"] = ui.BirthdayFilename;
+
         QMutableHashIterator<QString, bool> i(this->m_activenotifications);
         while (i.hasNext()) {
             i.next();
@@ -229,6 +242,37 @@ QList<SettingsStructure> GrowlNotificationLayer::getLayerSettingsList()
                 }
              }
         }
+
+        //Read settings for sound notifications
+        QMutableHashIterator<QString, QLineEdit *> it(this->m_line_edit_mapping);
+        while(it.hasNext()) {
+            it.next();
+            QString iniValue = "sound/" + it.key();
+            qDebug()  << this->m_settings->isValid(iniValue);
+            if(this->m_settings->isValid(iniValue))  {
+                //it.value()-> = this->m_settings->value(iniValue); //load settings
+                //qDebug() << "a";
+                if(this->m_line_edit_mapping.contains(it.key()))  {
+                       this->m_line_edit_mapping[it.key()]->setText(this->m_settings->value(iniValue).toString());
+                       //qDebug() << "set :" << i.key() <<" = " << this->m_settings->value(iniValue).toString();
+                }
+             }
+        }
+
+        quint16 rows = ui.gridLayout->rowCount();
+        for(quint16 num=2; num < rows; num++) {
+            QLayoutItem * wid = ui.gridLayout->itemAtPosition(num, 2);
+            if(!wid->isEmpty()) {
+                QWidget * button = wid->widget();
+                QObject::connect(button, SIGNAL(pressed()), this->m_button_mapper, SLOT(map()));
+                this->m_button_mapper->setMapping(button, button->objectName());
+            }
+
+
+        }
+
+        QObject::connect(this->m_button_mapper, SIGNAL(mapped(const QString &)), SLOT(fileSelectPresed(const QString &)));
+
         ss.settings_widget = widget;
         QList<SettingsStructure> list;
         list.append(ss);
@@ -245,11 +289,23 @@ void GrowlNotificationLayer::saveLayerSettings()
         this->m_settings->setValue("main/" + i.key(), i.value()->isChecked());
     }
     this->m_enabled = this->ui.NotifyEnabled->isChecked();
+
+    QMutableHashIterator<QString, QLineEdit *> it(this->m_line_edit_mapping);
+    while(it.hasNext())  {
+        it.next();
+        if(QFile::exists(it.value()->text())) {
+            this->m_settings->setValue("sound/" + it.key(), it.value()->text());
+        }
+        qDebug() << "sound/" << it.key() <<" = " << it.value()->text();
+    }
     //this->m_settings->setValue("main/enabled", this->ui.NotifyEnabled->isChecked());
 }
+
+//Invoked in any case in 0.2 =(
 void GrowlNotificationLayer::removeLayerSettings()
 {
     qDebug() << "GrowlNotification: settings change aborted";
+    this->saveLayerSettings();
 }
 
 //0.2+ section
@@ -260,8 +316,52 @@ void GrowlNotificationLayer::showPopup(const TreeModelItem &item, const QString 
 
 void GrowlNotificationLayer::playSound(const TreeModelItem &item, NotificationType type)
 {
-        //QString file_name = m_sound_path.value(type, QString());
+    QString n_type = "";
+    switch ( type )  {
+                case NotifyStartup:
+                        n_type = "startupSet";
+                        break;
+                case NotifyStatusChange:
+                        n_type = "statuschangeSet";
+                        break;
+                case NotifyMessageGet:
+                        n_type = "inSet";
+                        break;
+                case NotifyBirthday:
+                        n_type = "birthdaySet";
+                        break;
+                case NotifyCustom:
+                        n_type = "syseventSet";
+                        break;
+                case NotifyOnline:
+                        n_type = "onlineSet";
+                        break;
+                case NotifyOffline:
+                        n_type = "offlineSet";
+                        break;
+                default:
+                        break;
+        }
+    if(this->m_enabled && n_type != "")  {
+        QString fileName = this->m_settings->value("sound/" + n_type).toString();
+        if(QFile::exists(fileName))  {
+            this->m_sound.PlaySound(fileName);
+        }
+    }
+}
 
-        //if(!file_name.isEmpty() /*&& m_sound_layer && m_enable_sound*/)
-        //        sound.PlaySound(file_name);
+void GrowlNotificationLayer::fileSelectPresed(const QString &itemName)
+{
+    qDebug() << "Pressed:" << itemName;
+    QString oldpath = this->m_line_edit_mapping[itemName]->text();
+    qDebug() << oldpath;
+    if(!QFile::exists(oldpath)) {
+        oldpath = QDir::homePath();
+    } else {
+        oldpath = QDir(oldpath).filePath(oldpath);
+    }
+    QString fileName = QFileDialog::getOpenFileName(&this->m_widget,
+        tr("Select sound file"), oldpath,
+        tr("All files (*.*)"));
+    this->m_line_edit_mapping[itemName]->setText(fileName);
 }

@@ -9,7 +9,7 @@ class GrowlSound::Private
 };
 
 GrowlSound::GrowlSound() {
-    this->d = new Snd::Private;
+    this->d = new GrowlSound::Private;
     NSApplicationLoad();
     d->autoReleasePool_ = [[NSAutoreleasePool alloc] init];
 }

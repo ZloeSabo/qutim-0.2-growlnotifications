@@ -25,8 +25,12 @@
 #include "growlcocoasound.h"
 #include "ui_settings.h"
 
+#include <QSignalMapper>
+
 typedef QHash<QString,  bool> ActiveNotifications;
 typedef QHash<QString, QCheckBox *> MenuMapping;
+typedef QHash<QString, QLineEdit *> LineEditMapping;
+typedef QHash<QString, QToolButton *> FileSelectMapping;
 
 using namespace qutim_sdk_0_2;
 
@@ -52,21 +56,28 @@ public:
     //0.2beta
     virtual void showPopup(const TreeModelItem &item, const QString &message, NotificationType type);
     virtual void playSound(const TreeModelItem &item, NotificationType type);
-    virtual void notify(const TreeModelItem &item, const QString &message, NotificationType type) { showPopup(item,message, type); };
+    virtual void notify(const TreeModelItem &item, const QString &message, NotificationType type) {
+        showPopup(item,message, type);
+        playSound(item, type);
+    };
 
 private:
     PluginSystemInterface *m_plugin_system;
     ActiveNotifications m_activenotifications;
     MenuMapping m_mapping;
+    LineEditMapping m_line_edit_mapping;
+    FileSelectMapping m_file_select_mapping;
     GrowlNotifier * m_notifier;
     GrowlSettings * m_settings;
     bool m_enabled;
     Ui::GrowlSettings ui;
     QList<SettingsStructure> m_widgets;
     QWidget m_widget;
-    GrowlSound sound;
+    GrowlSound m_sound;
+    QSignalMapper * m_button_mapper;
 private slots:
     void createDefaultIni();
+    void fileSelectPresed(const QString &);
 };
 
 #endif // GROWLNOTIFICATIONLAYER_H

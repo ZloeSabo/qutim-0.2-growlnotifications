@@ -6,89 +6,493 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>396</width>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>261</width>
-     <height>281</height>
+     <x>9</x>
+     <y>0</y>
+     <width>381</width>
+     <height>331</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QCheckBox" name="NotifyEnabled">
-      <property name="text">
-       <string>Enabled</string>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <property name="tabPosition">
+    <enum>QTabWidget::North</enum>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <widget class="QWidget" name="popupsTab">
+    <attribute name="title">
+     <string>Pop-ups</string>
+    </attribute>
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>261</width>
+       <height>261</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="NotifyEnabled">
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="StatusChange">
+        <property name="text">
+         <string>Notify about status changes</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="ShowOffline">
+        <property name="text">
+         <string>Notify when user came offline</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="ShowOnline">
+        <property name="text">
+         <string>Notify when user came online</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="Typing">
+        <property name="text">
+         <string>Notify when contact is typing</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="MessageRecieved">
+        <property name="text">
+         <string>Notify when message is recieved</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="Birthday">
+        <property name="text">
+         <string>Notify about birthdays</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="Blocked">
+        <property name="text">
+         <string>Notify when message is blocked</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="Custom">
+        <property name="text">
+         <string>Notify about custom requests</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="soundsTab">
+    <attribute name="title">
+     <string>Sounds</string>
+    </attribute>
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>371</width>
+       <height>291</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="topMargin">
+       <number>1</number>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="StatusChange">
-      <property name="text">
-       <string>Notify about status changes</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="ShowOffline">
-      <property name="text">
-       <string>Notify when user came offline</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="ShowOnline">
-      <property name="text">
-       <string>Notify when user came online</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="Typing">
-      <property name="text">
-       <string>Notify when contact is typing</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="MessageRecieved">
-      <property name="text">
-       <string>Notify when message is recieved</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="Birthday">
-      <property name="text">
-       <string>Notify about birthdays</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="Blocked">
-      <property name="text">
-       <string>Notify when message is blocked</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="Custom">
-      <property name="text">
-       <string>Notify about custom requests</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="IncomingFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="OnlineFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="OfflineFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="StatusChangeFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="BirthdayFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QToolButton" name="syseventSet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QToolButton" name="inSet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QToolButton" name="onlineSet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QToolButton" name="offlineSet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QToolButton" name="statuschangeSet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QToolButton" name="birthdaySet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>System Event</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>SystemEventFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Incoming message</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>IncomingFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Contact online</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>OnlineFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Contact offline</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>OfflineFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Status change</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>StatusChangeFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Birthay</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>BirthdayFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QToolButton" name="syseventReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QToolButton" name="inReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QToolButton" name="onlineReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QToolButton" name="offlineReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QToolButton" name="statuschangeReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QToolButton" name="birthdayReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="SystemEventFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Startup</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>StartupFilename</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="StartupFilename">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QToolButton" name="startupSet">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QToolButton" name="startupReset">
+        <property name="text">
+         <string>reset</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>startupReset</sender>
+   <signal>pressed()</signal>
+   <receiver>StartupFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>358</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>syseventReset</sender>
+   <signal>pressed()</signal>
+   <receiver>SystemEventFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>358</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>inReset</sender>
+   <signal>pressed()</signal>
+   <receiver>IncomingFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>onlineReset</sender>
+   <signal>pressed()</signal>
+   <receiver>OnlineFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>offlineReset</sender>
+   <signal>pressed()</signal>
+   <receiver>OfflineFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>statuschangeReset</sender>
+   <signal>pressed()</signal>
+   <receiver>StatusChangeFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>birthdayReset</sender>
+   <signal>pressed()</signal>
+   <receiver>BirthdayFilename</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>358</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

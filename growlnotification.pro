@@ -14,7 +14,6 @@ QMAKE_LFLAGS += -framework \
     Growl \
     -framework \
     CoreFoundation \
-    \ \
     -framework \
     Cocoa
 FORMS += ui/settings.ui
@@ -31,4 +30,4 @@ SOURCES += src/notifyhelper.cpp \
     src/growlnotification.cpp
 RESOURCES += growlnotification.qrc
 UI_DIR = ui
-OTHER_FILES += src/growlcocoasound.mm
+OBJECTIVE_SOURCES += src/growlcocoasound.mm
