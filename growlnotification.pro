@@ -2,13 +2,15 @@
 # Project created by QtCreator 2009-04-20T18:42:44
 # -------------------------------------------------
 QT += core \
-    gui \
-    phonon
+    gui
 TARGET = growlnotification
 TEMPLATE = lib
 CONFIG += qt \
     plugin
 INCLUDEPATH += ../../include
+unix:INCLUDEPATH += /usr/include
+macx:INCLUDEPATH += /opt/local/include
+
 DESTDIR = build
 QMAKE_LFLAGS += -framework \
     Growl \
